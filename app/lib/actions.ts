@@ -1,17 +1,14 @@
-import { signIn } from "next-auth/react";
+"use server";
 
-export async function authenticate(formData: FormData): Promise<string> {
-  const { username, password } = Object.fromEntries(formData);
+import { signIn } from "@/app/auth";
 
-  const result = await signIn("credentials", {
-    username,
-    password,
-    redirect: false,
-  });
 
-  if (result?.error) {
-    return "Wrong username or password";
+export async function authenticate(prevState: unknown, formData: FormData): Promise<boolean> {
+  const { username, password } = Object.fromEntries(formData) as { username: string; password: string };
+  try {
+    await signIn('credentials', { username, password, redirect: false });
+    return true;
+  } catch (error) {
+    return false;
   }
-
-  return "Logged in";
 }

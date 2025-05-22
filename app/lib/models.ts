@@ -1,5 +1,11 @@
 import mongoose from "mongoose";
-
+export interface userProps {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+  isAdmin: boolean;
+}
 const userSchema = new mongoose.Schema(
   {
     username: {
