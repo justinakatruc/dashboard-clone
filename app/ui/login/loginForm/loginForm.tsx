@@ -2,13 +2,14 @@
 
 import { authenticate } from "@/app/lib/actions";
 import React from "react";
+import { redirect } from "next/navigation";
 
 export default function LoginForm() {
   const [state, formAction, loading] = React.useActionState(authenticate, undefined);
 
   React.useEffect(() => {
     if (state === true) {
-      window.location.href = "/dashboard";
+      redirect("/dashboard");
     }
   }, [state]);
   return (
